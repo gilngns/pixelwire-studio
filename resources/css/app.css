@@ -1,0 +1,615 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/*
+ * Pixelwire Studio
+ * Gaya manga + UI game untuk pasar VTuber: kertas krem dengan screentone,
+ * outline tinta tebal, bayangan stiker, judul ala poster anime, dan label
+ * font pixel Jepang. Hijau chroma key tetap dipakai untuk stage demo widget.
+ */
+@theme {
+    --font-display: 'Dela Gothic One', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'M PLUS Rounded 1c', ui-rounded, ui-sans-serif, system-ui, sans-serif;
+    --font-pixel: 'DotGothic16', ui-monospace, monospace;
+
+    --color-paper: #fff6ea;
+    --color-sheet: #ffffff;
+    --color-ink: #2a1f3d;
+    --color-muted: #6c6180;
+    --color-rule: #eadcf0;
+    --color-sakura: #ff7ab2;
+    --color-sakura-soft: #ffd6e8;
+    --color-sky: #82cdff;
+    --color-sky-soft: #d9f0ff;
+    --color-lemon: #ffe066;
+    --color-mint: #6fe3b5;
+    --color-lilac: #cdb9ff;
+    --color-chroma: #00b140;
+    --color-tally: #ff4d6d;
+}
+
+@layer base {
+    html {
+        color-scheme: light;
+        background-color: var(--color-paper);
+        /* Screentone halus seperti halaman manga. */
+        background-image: radial-gradient(rgba(42, 31, 61, 0.07) 1px, transparent 1.2px);
+        background-size: 14px 14px;
+        color: var(--color-ink);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        font-size: 1.0625rem;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    a {
+        text-underline-offset: 3px;
+        text-decoration-thickness: 2px;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--color-sky);
+        outline-offset: 3px;
+    }
+
+    ::selection {
+        background: var(--color-sakura);
+        color: var(--color-sheet);
+    }
+}
+
+@layer components {
+    /* Judul ala poster anime: huruf tebal dengan bayangan warna bergeser. */
+    .headline {
+        font-family: var(--font-display);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: 0.005em;
+        text-shadow: 0.06em 0.06em 0 var(--shadow, var(--color-sakura));
+    }
+
+    /* Subjudul katakana kecil di atas judul seksi. */
+    .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-pixel);
+        font-size: 0.9rem;
+        letter-spacing: 0.12em;
+        color: var(--color-sakura);
+    }
+
+    .kicker::before {
+        content: '';
+        width: 0.85rem;
+        height: 0.85rem;
+        background: currentColor;
+        clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    }
+
+    /* Label kecil font pixel untuk metadata dan kepala kolom. */
+    .label {
+        font-family: var(--font-pixel);
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+    }
+
+    .sticker {
+        border: 3px solid var(--color-ink);
+        border-radius: 18px;
+        box-shadow: 5px 5px 0 var(--color-ink);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border: 3px solid var(--color-ink);
+        border-radius: 999px;
+        box-shadow: 4px 4px 0 var(--color-ink);
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.15;
+        text-decoration: none;
+        transition: transform 90ms ease, box-shadow 90ms ease, background-color 120ms ease;
+    }
+
+    .btn:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 5px 5px 0 var(--color-ink);
+    }
+
+    .btn:active {
+        transform: translate(3px, 3px);
+        box-shadow: 1px 1px 0 var(--color-ink);
+    }
+
+    .btn-primary {
+        background: var(--color-sakura);
+        color: var(--color-ink);
+    }
+
+    .btn-ghost {
+        background: var(--color-sheet);
+        color: var(--color-ink);
+    }
+
+    .btn-ghost:hover {
+        background: var(--color-sky-soft);
+    }
+
+    .btn-active {
+        background: var(--color-lemon);
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.95rem;
+        font-size: 0.875rem;
+        border-width: 2.5px;
+        box-shadow: 3px 3px 0 var(--color-ink);
+    }
+
+    .btn[disabled] {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    /* Status commission dalam bentuk chip stiker. */
+    .tally {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0.85rem 0.3rem 0.6rem;
+        border: 2.5px solid var(--color-ink);
+        border-radius: 999px;
+        background: var(--color-sakura-soft);
+        font-family: var(--font-pixel);
+        font-size: 0.85rem;
+    }
+
+    .tally::before {
+        content: '';
+        width: 0.75rem;
+        height: 0.75rem;
+        flex: none;
+        border-radius: 999px;
+        border: 2px solid var(--color-ink);
+        background: var(--color-tally);
+    }
+
+    .tally-open {
+        background: #d9fbe9;
+    }
+
+    .tally-open::before {
+        background: var(--color-mint);
+        animation: blink 1.4s steps(1) infinite;
+    }
+
+    /* Meter slot: hati terisi = slot terpakai, hati kosong = slot tersedia. */
+    .slot-meter {
+        display: inline-flex;
+        gap: 4px;
+    }
+
+    .slot-meter span {
+        width: 1.05rem;
+        height: 1.05rem;
+        background: var(--color-sheet);
+        border: 2px solid var(--color-ink);
+        border-radius: 5px;
+    }
+
+    .slot-meter span[data-taken] {
+        background: var(--color-ink);
+    }
+
+    /* Panel hijau chroma key dengan grid pixel tipis. */
+    .stage {
+        background-color: var(--color-chroma);
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    /* Bingkai ala jendela game: title bar lilac, outline tinta, bayangan stiker. */
+    .source {
+        border: 3px solid var(--color-ink);
+        border-radius: 20px;
+        box-shadow: 7px 7px 0 var(--color-ink);
+        background: var(--color-lilac);
+        overflow: hidden;
+    }
+
+    .source-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.5rem 0.9rem;
+        border-bottom: 3px solid var(--color-ink);
+        color: var(--color-ink);
+    }
+
+    .toggle-group {
+        display: inline-flex;
+        padding: 3px;
+        gap: 2px;
+        border: 2.5px solid var(--color-ink);
+        border-radius: 999px;
+        background: var(--color-sheet);
+        font-family: var(--font-pixel);
+        font-size: 0.8rem;
+    }
+
+    .toggle-group a {
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        color: var(--color-ink);
+        text-decoration: none;
+    }
+
+    .toggle-group a[aria-current='true'] {
+        background: var(--color-ink);
+        color: var(--color-paper);
+    }
+
+    .toggle-group a:hover:not([aria-current='true']) {
+        background: var(--color-lemon);
+    }
+
+    /* Tombol menu di header HP (elemen <details>). */
+    .mobile-menu summary {
+        list-style: none;
+        cursor: pointer;
+    }
+
+    .mobile-menu summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .mobile-menu .menu-close,
+    .mobile-menu[open] .menu-open {
+        display: none;
+    }
+
+    .mobile-menu[open] .menu-close {
+        display: block;
+    }
+
+    .mobile-menu[open] summary {
+        background: var(--color-lemon);
+    }
+
+    /* FAQ: tiap pertanyaan bisa dibuka-tutup, ikon plus berubah jadi minus. */
+    .faq summary {
+        list-style: none;
+        cursor: pointer;
+    }
+
+    .faq summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-icon {
+        position: relative;
+        flex: none;
+        width: 30px;
+        height: 30px;
+        border: 2.5px solid var(--color-ink);
+        border-radius: 999px;
+        background: var(--color-lemon);
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 12px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: var(--color-ink);
+        transform: translate(-50%, -50%);
+        transition: transform 0.15s;
+    }
+
+    .faq-icon::after {
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq[open] .faq-icon::after {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .section-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Panel komik: kotak putih dengan outline tebal. */
+    .panel {
+        background: var(--color-sheet);
+        border: 3px solid var(--color-ink);
+        border-radius: 16px;
+    }
+
+    /* Speech bubble dengan ekor di kiri bawah. */
+    .bubble {
+        position: relative;
+        background: var(--color-sheet);
+        border: 3px solid var(--color-ink);
+        border-radius: 26px;
+    }
+
+    /* Ekor bubble: segitiga tinta di belakang, segitiga putih di depan. */
+    .bubble::before,
+    .bubble::after {
+        content: '';
+        position: absolute;
+        clip-path: polygon(0 0, 100% 0, 15% 100%);
+    }
+
+    .bubble::before {
+        left: 2.6rem;
+        bottom: -26px;
+        width: 34px;
+        height: 26px;
+        background: var(--color-ink);
+    }
+
+    .bubble::after {
+        left: calc(2.6rem + 4px);
+        bottom: -17px;
+        width: 24px;
+        height: 18px;
+        background: var(--color-sheet);
+    }
+
+    .field-label {
+        display: block;
+        font-weight: 800;
+        font-size: 0.95rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .field-hint {
+        display: block;
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin-top: 0.4rem;
+    }
+
+    .field {
+        width: 100%;
+        background: var(--color-sheet);
+        border: 2.5px solid var(--color-ink);
+        border-radius: 12px;
+        padding: 0.65rem 0.85rem;
+        color: var(--color-ink);
+        font: inherit;
+    }
+
+    .field::placeholder {
+        color: #a59bb6;
+    }
+
+    .field:focus {
+        outline: none;
+        box-shadow: 3px 3px 0 var(--color-sakura);
+    }
+
+    .field[aria-invalid='true'] {
+        border-color: var(--color-tally);
+        background: #fff1f4;
+    }
+
+    .field-error {
+        display: block;
+        color: #d61f45;
+        font-size: 0.875rem;
+        font-weight: 700;
+        margin-top: 0.4rem;
+    }
+
+    input[type='radio'],
+    input[type='checkbox'] {
+        accent-color: var(--color-sakura);
+    }
+
+    .notice {
+        background: var(--color-lemon);
+        border: 3px solid var(--color-ink);
+        border-radius: 16px;
+        box-shadow: 4px 4px 0 var(--color-ink);
+        padding: 1rem 1.25rem;
+    }
+
+    .prose-terms h2 {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        line-height: 1.15;
+        margin: 2.5rem 0 0.75rem;
+        text-shadow: 0.06em 0.06em 0 var(--color-sky);
+    }
+
+    .prose-terms ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .prose-terms li {
+        position: relative;
+        padding-left: 1.6rem;
+        margin: 0.5rem 0;
+    }
+
+    .prose-terms li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.3em;
+        width: 1rem;
+        height: 1rem;
+        background: var(--color-sakura);
+        clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    }
+
+    .prose-terms a {
+        font-weight: 800;
+        text-decoration: underline;
+        text-decoration-color: var(--color-sakura);
+    }
+
+    .prose-terms p {
+        margin: 0.75rem 0;
+    }
+}
+
+/* Speed lines manga di belakang hero. */
+.speedlines {
+    background: repeating-conic-gradient(from 0deg at var(--sx, 72%) var(--sy, 45%), rgba(42, 31, 61, 0.07) 0deg 1.4deg, transparent 1.4deg 7deg);
+    mask-image: radial-gradient(ellipse at var(--sx, 72%) var(--sy, 45%), transparent 0 18%, #000 45%, transparent 78%);
+}
+
+.sparkle {
+    position: absolute;
+    background: var(--c, var(--color-lemon));
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    animation: twinkle 2.6s ease-in-out infinite;
+}
+
+/* Chat box demo di hero: speech bubble per pesan. */
+.demo-chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    height: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 22%);
+}
+
+.demo-msg {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    max-width: 21rem;
+    padding: 0.5rem 0.85rem 0.55rem 0.55rem;
+    background: #fff;
+    border: 2.5px solid var(--color-ink);
+    border-radius: 16px 16px 16px 4px;
+    box-shadow: 3px 3px 0 var(--color-ink);
+    color: var(--color-ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    animation: msg-in 380ms cubic-bezier(0.2, 0.9, 0.3, 1.35) both;
+}
+
+.demo-msg .who {
+    display: block;
+    width: fit-content;
+    margin-bottom: 0.15rem;
+    padding: 0 0.45rem;
+    border-radius: 999px;
+    background: var(--role, #e9e3f2);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.demo-msg .badge {
+    flex: none;
+    width: 1.65rem;
+    height: 1.65rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--color-ink);
+    border-radius: 999px;
+    background: var(--role, #e9e3f2);
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+}
+
+.demo-alert {
+    position: absolute;
+    left: 50%;
+    top: 1.25rem;
+    translate: -50% 0;
+    padding: 0.5rem 1.2rem 0.6rem;
+    background: var(--color-lemon);
+    color: var(--color-ink);
+    border: 3px solid var(--color-ink);
+    border-radius: 14px;
+    box-shadow: 4px 4px 0 var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    white-space: nowrap;
+    animation: alert-pop 3.2s ease both;
+}
+
+.rec::before {
+    content: '';
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-right: 0.45rem;
+    border-radius: 999px;
+    background: var(--color-tally);
+    animation: blink 1.4s steps(1) infinite;
+}
+
+@keyframes msg-in {
+    from { opacity: 0; transform: translateY(14px) scale(0.85); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes alert-pop {
+    0% { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+    9% { opacity: 1; transform: scale(1.12) rotate(3deg); }
+    15% { transform: scale(1) rotate(-2deg); }
+    85% { opacity: 1; transform: scale(1) rotate(-2deg); }
+    100% { opacity: 0; transform: scale(0.9) translateY(-10px); }
+}
+
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+@keyframes twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(0.65) rotate(25deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

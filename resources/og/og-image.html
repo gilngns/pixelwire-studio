@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  Sumber gambar preview link (public/og-image.png, 1200x630).
+  Buat ulang dengan screenshot headless, misalnya:
+  msedge --headless=new --hide-scrollbars --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og-image.png file:///.../resources/og/og-image.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=M+PLUS+Rounded+1c:wght@700;800&display=block" rel="stylesheet">
+<style>
+    :root { --paper:#fff6ea; --ink:#2a1f3d; --muted:#6c6180; --sakura:#ff7ab2; --sky:#82cdff; --lemon:#ffe066; --mint:#6fe3b5; --lilac:#cdb9ff; --chroma:#00b140; }
+    * { box-sizing: border-box; margin: 0; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+        position: relative;
+        background-color: var(--paper);
+        background-image: radial-gradient(rgba(42,31,61,.08) 1.2px, transparent 1.4px);
+        background-size: 16px 16px;
+        color: var(--ink);
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+    }
+    .lines {
+        position: absolute; inset: 0;
+        background: repeating-conic-gradient(from 0deg at 76% 50%, rgba(42,31,61,.07) 0deg 1.4deg, transparent 1.4deg 7deg);
+        -webkit-mask-image: radial-gradient(ellipse at 76% 50%, transparent 0 16%, #000 42%, transparent 75%);
+    }
+    .left { position: absolute; left: 72px; top: 92px; width: 560px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand span { font-family: 'Dela Gothic One'; font-size: 30px; }
+    .kicker { margin-top: 44px; font-family: 'DotGothic16'; font-size: 22px; letter-spacing: .14em; color: var(--sakura); }
+    h1 { margin-top: 10px; font-family: 'Dela Gothic One'; font-weight: 400; font-size: 64px; line-height: 1.06; text-shadow: 4px 4px 0 var(--sakura); }
+    .chips { margin-top: 34px; display: flex; gap: 12px; }
+    .chip { padding: 8px 18px; border: 3px solid var(--ink); border-radius: 999px; font-weight: 800; font-size: 20px; background: #fff; box-shadow: 3px 3px 0 var(--ink); }
+    .chip:nth-child(1) { background: var(--sakura); }
+    .chip:nth-child(2) { background: var(--sky); }
+    .chip:nth-child(3) { background: var(--lemon); }
+
+    .window { position: absolute; right: 64px; top: 112px; width: 430px; border: 4px solid var(--ink); border-radius: 24px; overflow: hidden; background: var(--lilac); box-shadow: 9px 9px 0 var(--ink); transform: rotate(2deg); }
+    .bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 4px solid var(--ink); font-family: 'DotGothic16'; font-size: 17px; }
+    .bar b { display: inline-block; width: 11px; height: 11px; border-radius: 99px; background: #ff4d6d; margin-right: 8px; }
+    .stage { height: 330px; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px;
+        background-color: var(--chroma);
+        background-image: linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px);
+        background-size: 22px 22px; }
+    .msg { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 3px solid var(--ink); border-radius: 18px 18px 18px 5px; box-shadow: 3px 3px 0 var(--ink); padding: 9px 14px 10px 10px; font-weight: 700; font-size: 18px; line-height: 1.3; max-width: 340px; }
+    .badge { flex: none; width: 30px; height: 30px; border: 2.5px solid var(--ink); border-radius: 99px; display: grid; place-items: center; font-family: 'DotGothic16'; font-size: 15px; }
+    .who { display: block; width: fit-content; padding: 0 9px; border-radius: 99px; font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+    .alert { position: absolute; right: 150px; top: 50px; transform: rotate(-6deg); background: var(--lemon); border: 4px solid var(--ink); border-radius: 16px; box-shadow: 5px 5px 0 var(--ink); padding: 10px 20px 12px; font-family: 'Dela Gothic One'; font-size: 24px; z-index: 2; }
+    .sparkle { position: absolute; background: var(--c); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); z-index: 3; }
+</style>
+</head>
+<body>
+    <div class="lines"></div>
+
+    <div class="left">
+        <div class="brand">
+            <svg width="44" height="44" viewBox="0 0 28 28">
+                <path d="M7 7 H21 V21" fill="none" stroke="#2a1f3d" stroke-width="2.5"/>
+                <rect x="1.5" y="1.5" width="11" height="11" rx="3" fill="#ff7ab2" stroke="#2a1f3d" stroke-width="2"/>
+                <rect x="16" y="2.5" width="9" height="9" rx="2.5" fill="#82cdff" stroke="#2a1f3d" stroke-width="2"/>
+                <rect x="16" y="16" width="9" height="9" rx="2.5" fill="#ffe066" stroke="#2a1f3d" stroke-width="2"/>
+            </svg>
+            <span>Pixelwire Studio</span>
+        </div>
+        <p class="kicker">✦ ストリーム・ウィジェット</p>
+        <h1>Custom stream widgets for VTubers</h1>
+        <div class="chips">
+            <span class="chip">Chat boxes</span>
+            <span class="chip">Alerts</span>
+            <span class="chip">Timers</span>
+        </div>
+    </div>
+
+    <div class="alert">kopi_susu just subscribed!</div>
+    <span class="sparkle" style="--c:var(--lemon); width:46px; height:46px; right:470px; top:190px"></span>
+    <span class="sparkle" style="--c:var(--sky); width:30px; height:30px; right:40px; top:300px"></span>
+    <span class="sparkle" style="--c:var(--sakura); width:26px; height:26px; right:480px; top:470px"></span>
+
+    <div class="window">
+        <div class="bar"><span><b></b>chatbox.html</span><span>1920×1080</span></div>
+        <div class="stage">
+            <div class="msg"><span class="badge" style="background:var(--sky)">S</span><span><span class="who" style="background:var(--sky)">kopi_susu</span>the frames change per role??</span></div>
+            <div class="msg"><span class="badge" style="background:var(--mint)">M</span><span><span class="who" style="background:var(--mint)">nightowl_mod</span>reminder: be nice in chat</span></div>
+            <div class="msg"><span class="badge" style="background:var(--sakura)">B</span><span><span class="who" style="background:var(--sakura)">you</span>coded, works in OBS ✨</span></div>
+        </div>
+    </div>
+</body>
+</html>
